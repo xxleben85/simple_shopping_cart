@@ -6,6 +6,7 @@ var quantityCost = function(el) {
 
     $(el).children('.cost').html(cost);
     return cost;
+
 };
 
 var updateList = function() {
@@ -13,22 +14,22 @@ var updateList = function() {
 
   $('tbody tr').each(function(ind, el) {
     var totalCost = quantityCost(el);
-    total.push(totalCost)
-  });
-  total = total.reduce(function(a,b) {
-    return a + b;
-  })
+      total.push(totalCost)
+    });
+    total = total.reduce(function(a,b) {
+      return a + b;
+    });
   $('#total').html(total);
-  };
+
+};
 
 
 $(document).ready(function () {
-  // var item = $(el).children('.item').text();
+
   $('tr:odd').css("background-color", "#e8e8e8");
-  var total = [];
-  $('.btn .remove').on('click', function(event) {
+  updateList();
+  $('.btn .remove').on('click', function(e) {
     $(this).closest('tr').remove();
   });
-  quantityCost();
-  updateList();
+
 });
