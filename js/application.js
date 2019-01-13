@@ -11,9 +11,10 @@ var quantityCost = function(el) {
     return cost;
 
 };
+
 var inputCalculation = function() {
-  var inputPrice = parseFloat($(el).find('textInput').text());
-  var inputQuantity = parseFloat($(el).find('.priceInput').text());
+  var inputPrice = parseFloat($(el).find('textInput').val());
+  var inputQuantity = parseFloat($(el).find('.priceInput').val());
 
   var inputCost = inputPrice * inputQuantity;
 };
@@ -25,7 +26,7 @@ var updateList = function() {
     var totalCost = quantityCost(el);
       total.push(totalCost)
     });
-    
+
     total = total.reduce(function(a,b) {
       return a + b;
     });
@@ -34,11 +35,20 @@ var updateList = function() {
 };
 
 $(document).ready(function () {
-
   $('tr:odd').css("background-color", "#e8e8e8");
+
   updateList();
-  $('.btn .remove').on('click', function(e) {
+
+  $(document).on('click', '.btn#remove', function(event) {
     $(this).closest('tr').remove();
+    updateList();
   });
 
+  var timeout;
+  $(document).on('input', 'tr input', function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      updateList();
+    }, 500);
+  });
 });
