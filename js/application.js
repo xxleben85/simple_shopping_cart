@@ -22,7 +22,6 @@ var updateList = function() {
       return a + b;
     });
 
-
   $('#total').html(total);
 
 };
@@ -61,5 +60,4 @@ $(document).ready(function () {
     $(this).children('#priceInput').val('');
     $(this).children('#textInput').val('');
   })
-  $('tbody tr:odd').css("background-color", "#e8e8e8");
 });
