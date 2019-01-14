@@ -6,17 +6,8 @@ var quantityCost = function(el) {
 
     $(el).children('.cost').html(cost);
 
-
-
     return cost;
 
-};
-
-var inputCalculation = function() {
-  var inputPrice = parseFloat($(el).find('textInput').val());
-  var inputQuantity = parseFloat($(el).find('.priceInput').val());
-
-  var inputCost = inputPrice * inputQuantity;
 };
 
 var updateList = function() {
@@ -30,16 +21,16 @@ var updateList = function() {
     total = total.reduce(function(a,b) {
       return a + b;
     });
+
+
   $('#total').html(total);
 
 };
 
 $(document).ready(function () {
-  $('tr:odd').css("background-color", "#e8e8e8");
-
   updateList();
 
-  $(document).on('click', '.btn#remove', function(event) {
+  $(document).on('click', '.btn.remove', function(e) {
     $(this).closest('tr').remove();
     updateList();
   });
@@ -49,6 +40,26 @@ $(document).ready(function () {
     clearTimeout(timeout);
     timeout = setTimeout(function () {
       updateList();
-    }, 500);
+    }, 300);
+
   });
+
+  $('#addItem').on('submit', function(e) {
+    e.preventDefault();
+
+    var priceInput = $(this).children('#priceInput').val();
+    var textInput = $(this).children('#textInput').val();
+
+    if(!(textInput) || !(priceInput)) {
+      alert('Please add Item and Price');
+    } else {
+      $('tbody').prepend('<tr>' + '<td class = "item">' + textInput +'</td>' + '<td class = "price">' + priceInput + '</td><td class="quantity"><input type="number" value="0" min = "0"/></td><td><button class="btn btn-danger remove">Remove</button></td><td class="cost"></td>' + '</tr>');
+    };
+
+    updateList();
+
+    $(this).children('#priceInput').val('');
+    $(this).children('#textInput').val('');
+  })
+  $('tbody tr:odd').css("background-color", "#e8e8e8");
 });
